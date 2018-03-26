@@ -6,7 +6,10 @@ import { Button, Touchable } from '../components'
 
 import { createAction, NavigationActions } from '../utils'
 
-@connect(({ app }) => ({ ...app }))
+@connect(({ app, loading }) => ({
+  ...app,
+  loading: loading.effects['app/login']
+}))
 class Login extends Component {
   static navigationOptions = {
     title: 'Login',
@@ -21,15 +24,15 @@ class Login extends Component {
   }
 
   render() {
-    const { fetching } = this.props
+    const { loading } = this.props
     return (
       <View style={styles.container}>
-        {fetching ? (
+        {loading ? (
           <ActivityIndicator />
         ) : (
           <Button text="Login" onPress={this.onLogin} />
         )}
-        {!fetching && (
+        {!loading && (
           <Touchable style={styles.close} text="Close" onPress={this.onClose}>
             <Text>Close</Text>
           </Touchable>

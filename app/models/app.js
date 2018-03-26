@@ -5,8 +5,6 @@ export default {
   namespace: 'app',
   state: {
     login: false,
-    loading: true,
-    fetching: false,
   },
   reducers: {
     updateState(state, { payload }) {
@@ -16,10 +14,11 @@ export default {
   effects: {
     *loadStorage(action, { call, put }) {
       const login = yield call(Storage.get, 'login', false)
-      yield put(createAction('updateState')({ login, loading: false }))
+      yield put(createAction('updateState')({ login }))
     },
     *login({ payload }, { call, put }) {
-      yield put(createAction('updateState')({ fetching: true }))
+      console.log('effects.login start')
+      yield put(createAction('updateState'))
       const login = yield call(authService.login, payload)
       if (login) {
         yield put(
@@ -29,7 +28,7 @@ export default {
           })
         )
       }
-      yield put(createAction('updateState')({ login, fetching: false }))
+      yield put(createAction('updateState')({ login }))
       Storage.set('login', login)
     },
     *logout(action, { call, put }) {
