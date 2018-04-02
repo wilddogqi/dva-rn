@@ -8,7 +8,7 @@ import { createAction, NavigationActions } from '../utils'
 
 @connect(({ app, loading }) => ({
   ...app,
-  loading: loading.effects['app/login']
+  loading: loading.effects['app/login'],
 }))
 class Login extends Component {
   static navigationOptions = {

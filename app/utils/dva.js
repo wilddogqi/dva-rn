@@ -7,7 +7,10 @@ export { connect }
 export default function(options) {
   const app = create(options)
   // HMR workaround
-  if (!global.registered) options.models.forEach(model => app.model(model))
+  if (!global.registered && options.models)
+    options.models.forEach(model => app.model(model))
+  if (!global.registered && options.plugins)
+    options.plugins.forEach(plugin => app.use(plugin))
   global.registered = true
 
   app.start()

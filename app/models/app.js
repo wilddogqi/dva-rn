@@ -17,8 +17,7 @@ export default {
       yield put(createAction('updateState')({ login }))
     },
     *login({ payload }, { call, put }) {
-      console.log('effects.login start')
-      yield put(createAction('updateState'))
+      yield put(createAction('updateState')())
       const login = yield call(authService.login, payload)
       if (login) {
         yield put(
